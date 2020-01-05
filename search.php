@@ -46,7 +46,7 @@
             $image_ids = array();
 
             // get tag IDs 
-            foreach ($search_tag as $tag_label) {
+            foreach ($search_tags as $tag_label) {
                 $query = 'SELECT `tag_id` FROM `tags` WHERE `tag_label` = :tag_label';
                 $statement = $db->prepare($query);
                 $statement->bindValue(':tag_label', $tag_label);
@@ -72,8 +72,8 @@
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                 foreach ($result as $img) {
-                    if (array_search($img['img_id'], $image_ids) !== false) {
-                        $eligible[] = $img['img_id'];
+                    if (array_search($img, $image_ids) !== false) {
+                        $eligible[] = $img;
                     }
                 }
                 $image_ids = $eligible;
@@ -83,9 +83,11 @@
             foreach ($image_ids as $img_id) {
                 $query = 'SELECT `img_path` FROM `images` WHERE `img_id` = :img_id';
                 $statement = $db->prepare($query);
-                $statement->bindValue(':img_id', $img_id);
+                $statement->bindValue(':img_id', $img_id['img_id']);
                 $statement->execute();
-                $images[] = array('img_id' => $img_id, 'img_path' => $statement->fetch(PDO::FETCH_ASSOC)['img_path']);
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+                $images[] = array('img_id' => $img_id['img_id'], 'img_path' => $result['img_path']);
             }
             $statement->closeCursor();
         }
