@@ -1,9 +1,12 @@
 <?php
 
-    require_once 'config.php';
+    // contains paths to resources relative to web root
+    require_once 'paths.php';
 
-    echo WEB_ROOT;
-    echo INCLUDE_DIR;
-    echo CONFIG_DIR;
+    // contains various settings, such as database information
+    require_once CONFIG_DIR . '/config.php';
+
+    $readme = file_get_contents('readme.md');
+    echo $readme ? $readme : 'Error: readme.md could not be read.';
 
 ?>
