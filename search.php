@@ -1,5 +1,10 @@
 <?php
 
+    /*
+        Takes a string of space-separated tags and returns
+        an array of image ID/path pairs encoded in JSON.
+    */
+
     // paths to resources relative to web root
     require_once 'paths.php';
 
