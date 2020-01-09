@@ -14,13 +14,13 @@
     // external server whitelist for CORS
     require_once CONFIG_DIR . '/whitelist.php';
 
-    if (isset($_POST)) {
-        $json = json_decode(file_get_contents('php://input'));
+    if (isset($_GET['search'])) {
+        $searchString = $_GET['search'];
 
         try {
             $db = new PDO(DSN, DB_USER, DB_PW);
 
-            $tokens = explode(' ', $json->searchString);
+            $tokens = explode(' ', $searchString);
             $search_tags = array();
             $quote_tag = '';
 
