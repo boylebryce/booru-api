@@ -3,24 +3,21 @@
     /*
         Takes a string of space-separated tags and returns
         an array of image ID/path pairs encoded in JSON.
+        Alternatively returns all image ID/path pairs in
+        the database if GET['all'] is set.
     */
 
-    // paths to resources relative to web root
     require_once 'paths.php';
-
-    // various settings, such as database information
     require_once CONFIG_DIR . '/config.php';
-
-    // external server whitelist for CORS
     require_once CONFIG_DIR . '/whitelist.php';
 
+    $db = new PDO(DSN, DB_USER, DB_PW);
+
     if (isset($_GET['search'])) {
-        $searchString = $_GET['search'];
+        $search_string = $_GET['search'];
 
         try {
-            $db = new PDO(DSN, DB_USER, DB_PW);
-
-            $tokens = explode(' ', $searchString);
+            $tokens = explode(' ', $search_string);
             $search_tags = array();
             $quote_tag = '';
 
@@ -95,11 +92,25 @@
                 $images[] = array('img_id' => $img_id['img_id'], 'img_path' => $result['img_path']);
             }
             $statement->closeCursor();
+            echo json_encode($images);
         }
         catch (PDOException $e) {
             echo $e->getMessage();
         }
-
-        echo json_encode($images);
     }
+
+    else if (isset($_GET['all'])) {
+        try {
+            $query = 'SELECT * FROM `images`';
+            $statement = $db->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $statement->closeCursor();
+            echo json_encode($result);
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
 ?>
