@@ -11,9 +11,8 @@
     require_once CONFIG_DIR . '/config.php';
     require_once CONFIG_DIR . '/whitelist.php';
 
-    $db = new PDO(DSN, DB_USER, DB_PW);
-
     if (isset($_GET['search'])) {
+        $db = new PDO(DSN, DB_USER, DB_PW);
         $search_string = $_GET['search'];
 
         try {
@@ -100,6 +99,8 @@
     }
 
     else if (isset($_GET['all'])) {
+        $db = new PDO(DSN, DB_USER, DB_PW);
+
         try {
             $query = 'SELECT * FROM `images`';
             $statement = $db->prepare($query);
