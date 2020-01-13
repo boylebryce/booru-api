@@ -8,8 +8,8 @@
     */
 
     require_once 'paths.php';
-    require_once CONFIG_DIR . '/config.php';
-    require_once CONFIG_DIR . '/whitelist.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/config.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/whitelist.php';
 
     if (isset($_GET['search'])) {
         $db = new PDO(DSN, DB_USER, DB_PW);

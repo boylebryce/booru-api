@@ -6,8 +6,8 @@
     */
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/paths.php';
-    require_once CONFIG_DIR . '/config.php';
-    require_once CONFIG_DIR . '/whitelist.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/config.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/whitelist.php';
 
     if (!isset($_GET['img_id'])) {
         $response = ['error' => 'Invalid request: no image id'];
