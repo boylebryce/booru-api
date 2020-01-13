@@ -7,7 +7,6 @@
         the database if GET['all'] is set.
     */
 
-    require_once 'paths.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/config.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/whitelist.php';
 

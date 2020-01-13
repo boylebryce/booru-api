@@ -5,7 +5,6 @@
         database, and returns the image ID and path as JSON
     */
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/paths.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/config.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/whitelist.php';
 
