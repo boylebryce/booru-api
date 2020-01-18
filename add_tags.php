@@ -16,7 +16,7 @@
         'error'     => ''
     ];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tags']) && isset($_POST['img_id'])) {
+    if (isset($_POST['tags']) && isset($_POST['img_id'])) {
         // Validate image ID before doing any work
         $img_id = $_POST['img_id'];
         $db = new PDO(DSN, DB_USER, DB_PW);
@@ -117,14 +117,8 @@
         }
 
     }
-    else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tags'])) {
-        $response['error'] = 'Invalid request: img_id is not set in the POST body';
-    }
-    else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['img_id'])) {
-        $response['error'] = 'Invalid request: tags is not set in the POST body';
-    }
     else {
-        $response['error'] = 'Invalid request: Request method is not POST';
+        $response['error'] = 'Invalid request';
     }
 
     echo json_encode($response);
