@@ -57,7 +57,8 @@
             $statement->bindValue(':tag_id', $tag_id['tag_id']);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            $response['tags'][$tag_id['tag_id']] = $result['tag_label']; 
+            //$response['tags'][$tag_id['tag_id']] = $result['tag_label']; 
+            $response['tags'][] = ['tag_id' => $tag_id['tag_id'], 'tag_label' => $result['tag_label']];
         }
     }
     catch (PDOException $e) {

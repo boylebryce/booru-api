@@ -10,10 +10,11 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/config.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/booru-api/include/whitelist.php';
 
-    $response = array(
+    $response = [
         'img_id'    => '',
         'img_path'  => '',
-        'error'     => '');
+        'error'     => ''
+    ];
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tags']) && isset($_POST['img_id'])) {
         // Validate image ID before doing any work
@@ -73,7 +74,7 @@
             exit();
         }
 
-        //$tag_ids = array();
+        $tag_id = '';
 
         // Tags are parsed and valid, get tag IDs
         foreach($tag_labels as $tag_label) {
@@ -81,19 +82,16 @@
                 $query = 'SELECT `tag_id` FROM `tags` WHERE `tag_label` = :tag_label';
                 $statement = $db->prepare($query);
                 $statement->bindValue(':tag_label', $tag_label);
-                $statement->execute(PDO::FETCH_ASSOC);
-                $tag_id = $statement->fetch()['img_id'];
+                $statement->execute();
+                $tag_id = $statement->fetch(PDO::FETCH_ASSOC)['tag_id'];
 
-                // If tag doesn't exist in tags table, add it
-                if (!$statement->columnCount()) {
+                if (!$tag_id) {
                     $query = 'INSERT INTO `tags` (`tag_id`, `tag_label`, `tag_imgcount`) VALUES (NULL, :tag_label, 0)';
                     $statement = $db->prepare($query);
                     $statement->bindValue(':tag_label', $tag_label);
                     $statement->execute();
                     $tag_id = $db->lastInsertId();
                 }
-
-                //$tag_ids[$tag_id] = $tag_label;
 
                 // Check if image already has the tag
                 $query = 'SELECT COUNT(*) FROM `imagetags` WHERE `img_id` = :img_id AND `tag_id` = :tag_id';
