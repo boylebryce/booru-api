@@ -11,5 +11,8 @@
     define('DB_PW',     '');
 
     // upload directory
-    define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'] . '/booru/img/')
+    define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'] . '/booru/img/');
+
+    // default error message
+    define('INVALID_REQUEST', 'Invalid API call');
 ?>

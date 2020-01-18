@@ -13,7 +13,7 @@
         'img_path'  => '',
         'error'     => '');
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile'])) {
+    if (isset($_FILES['userfile'])) {
         $valid_extensions = array('png', 'jpg', 'jpeg');
         $upload_extension = explode('/', $_FILES['userfile']['type'])[1];
         if (!in_array($upload_extension, $valid_extensions)) {

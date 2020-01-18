@@ -4,7 +4,7 @@
 
     $response = ['error' => ''];
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tag_ids']) && isset($_POST['img_id'])) {
+    if (isset($_POST['tag_ids']) && isset($_POST['img_id'])) {
         // Validate image ID before doing any work
         $img_id = $_POST['img_id'];
         $db = new PDO(DSN, DB_USER, DB_PW);
